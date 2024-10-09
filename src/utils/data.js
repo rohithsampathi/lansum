@@ -14,6 +14,20 @@ export let mockUsers = [
       isAdmin: true,
       flatNumber: 'ADMIN',
     },
+    {
+        id: 3,
+        username: 'charan',
+        password: 'charan1',
+        isAdmin: false,
+        flatNumber: 'ADMIN',
+      },
+      {
+        id: 4,
+        username: 'ram',
+        password: 'ram@123',
+        isAdmin: true,
+        flatNumber: 'ADMIN',
+      },
   ];
   
   // Mock Categories
