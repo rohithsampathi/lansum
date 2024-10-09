@@ -1,25 +1,76 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { mockUsers } from './utils/data';
+import LoginView from './views/LoginView';
+import DashboardView from './views/DashboardView';
+import AddIssueView from './views/AddIssueView';
+import ManageUsersView from './views/ManageUsersView';
+import ManageCategoriesView from './views/ManageCategoriesView';
+import ProfileView from './views/ProfileView';
+import NotFoundView from './views/NotFoundView';
 
-function App() {
+const App = () => {
+  const [user, setUser] = useState(null);
+
+  const login = (username, password) => {
+    const foundUser = mockUsers.find(
+      (u) => u.username === username && u.password === password
+    );
+    if (foundUser) {
+      setUser(foundUser);
+    } else {
+      alert('Invalid credentials');
+    }
+  };
+
+  const logout = () => {
+    setUser(null);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      {user ? (
+        <Routes>
+          <Route
+            path="/dashboard"
+            element={<DashboardView user={user} logout={logout} />}
+          />
+          <Route path="/add-issue" element={<AddIssueView user={user} />} />
+          <Route
+            path="/manage-users"
+            element={
+              user.isAdmin ? (
+                <ManageUsersView user={user} />
+              ) : (
+                <Navigate to="/dashboard" replace />
+              )
+            }
+          />
+          <Route
+            path="/manage-categories"
+            element={
+              user.isAdmin ? (
+                <ManageCategoriesView user={user} />
+              ) : (
+                <Navigate to="/dashboard" replace />
+              )
+            }
+          />
+          <Route
+            path="/profile"
+            element={<ProfileView user={user} setUser={setUser} />}
+          />
+          <Route path="/" element={<Navigate to="/dashboard" replace />} />
+          <Route path="*" element={<NotFoundView />} />
+        </Routes>
+      ) : (
+        <Routes>
+          <Route path="/" element={<LoginView login={login} />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      )}
+    </Router>
   );
-}
+};
 
 export default App;
