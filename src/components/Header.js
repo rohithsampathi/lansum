@@ -14,9 +14,9 @@ const Header = ({ user, logout }) => {
   return (
     <header className="bg-white shadow-md">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center py-4">
-          <Link to="/" className="flex items-center text-2xl font-bold text-primary">
-            <Logo className="mr-2" />
+        <div className="flex justify-between items-center py-3 md:py-4">
+          <Link to="/" className="flex items-center text-xl md:text-2xl font-bold text-primary">
+            <Logo className="w-6 h-6 md:w-8 md:h-8 mr-2" />
             <span className="hidden sm:inline">CommUnity Hub</span>
           </Link>
           <div className="hidden md:flex items-center space-x-4">
@@ -24,7 +24,7 @@ const Header = ({ user, logout }) => {
               <User className="inline-block mr-1" size={18} />
               <span>{user.username}</span>
             </Link>
-            <Button onClick={logout} className="flex items-center">
+            <Button onClick={logout} className="flex items-center text-sm">
               <LogOut className="mr-2" size={18} /> Logout
             </Button>
           </div>
@@ -41,13 +41,19 @@ const Header = ({ user, logout }) => {
             <Link
               to="/profile"
               className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-primary hover:bg-gray-50"
+              onClick={toggleMobileMenu}
             >
-              Profile
+              <User className="inline-block mr-2" size={18} />
+              {user.username}
             </Link>
             <button
-              onClick={logout}
-              className="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-primary hover:bg-gray-50"
+              onClick={() => {
+                logout();
+                toggleMobileMenu();
+              }}
+              className="w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-primary hover:bg-gray-50"
             >
+              <LogOut className="inline-block mr-2" size={18} />
               Logout
             </button>
           </div>

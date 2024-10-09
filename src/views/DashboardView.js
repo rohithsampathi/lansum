@@ -48,7 +48,6 @@ const DashboardView = ({ user, logout }) => {
   const [endDate, setEndDate] = useState(new Date());
 
   useEffect(() => {
-    // Filter issues based on date range
     const filteredIssues = issuesData.filter(issue => {
       const issueDate = new Date(issue.createdOn);
       return issueDate >= startDate && issueDate <= endDate;
@@ -129,16 +128,16 @@ const DashboardView = ({ user, logout }) => {
       <Header user={user} logout={logout} />
       <main className="flex-grow p-4 md:p-6 lg:p-8">
         <div className="max-w-7xl mx-auto">
-          <div className="flex justify-between items-center mb-6">
-            <h1 className="text-3xl font-bold text-gray-800">Dashboard</h1>
-            <div className="flex items-center space-x-4">
+          <div className="flex flex-col md:flex-row justify-between items-center mb-6">
+            <h1 className="text-2xl md:text-3xl font-bold text-gray-800 mb-4 md:mb-0">Dashboard</h1>
+            <div className="flex flex-col md:flex-row items-center space-y-2 md:space-y-0 md:space-x-4">
               <DatePicker
                 selected={startDate}
                 onChange={(date) => setStartDate(date)}
                 selectsStart
                 startDate={startDate}
                 endDate={endDate}
-                className="p-2 border rounded"
+                className="p-2 border rounded w-full md:w-auto"
               />
               <DatePicker
                 selected={endDate}
@@ -147,7 +146,7 @@ const DashboardView = ({ user, logout }) => {
                 startDate={startDate}
                 endDate={endDate}
                 minDate={startDate}
-                className="p-2 border rounded"
+                className="p-2 border rounded w-full md:w-auto"
               />
             </div>
           </div>
@@ -208,9 +207,9 @@ const DashboardView = ({ user, logout }) => {
             </CardContent>
           </Card>
           <Card>
-            <CardHeader className="flex justify-between items-center">
-              <h2 className="text-xl font-semibold">EdenPulse</h2>
-              <Button onClick={handleExport} className="bg-green-500 hover:bg-green-600">
+            <CardHeader className="flex flex-col md:flex-row justify-between items-center">
+              <h2 className="text-xl font-semibold mb-2 md:mb-0">EdenPulse</h2>
+              <Button onClick={handleExport} className="w-full md:w-auto bg-green-500 hover:bg-green-600">
                 Export to Excel
               </Button>
             </CardHeader>
@@ -284,16 +283,16 @@ const DashboardView = ({ user, logout }) => {
             </CardContent>
           </Card>
           {!user.isAdmin && (
-            <Button onClick={() => navigate('/add-issue')} className="mt-6 bg-green-500 hover:bg-green-600">
+            <Button onClick={() => navigate('/add-issue')} className="mt-6 w-full md:w-auto bg-green-500 hover:bg-green-600">
               Raise New Issue
             </Button>
           )}
           {user.isAdmin && (
-            <div className="mt-6 flex flex-wrap gap-4">
-              <Button onClick={() => navigate('/manage-users')} className="bg-blue-500 hover:bg-blue-600">
+            <div className="mt-6 flex flex-col md:flex-row gap-4">
+              <Button onClick={() => navigate('/manage-users')} className="w-full md:w-auto bg-blue-500 hover:bg-blue-600">
                 Manage Users
               </Button>
-              <Button onClick={() => navigate('/manage-categories')} className="bg-purple-500 hover:bg-purple-600">
+              <Button onClick={() => navigate('/manage-categories')} className="w-full md:w-auto bg-purple-500 hover:bg-purple-600">
                 Manage Categories
               </Button>
             </div>
@@ -310,7 +309,7 @@ const DashboardView = ({ user, logout }) => {
           <div className="space-y-4">
             <h3 className="text-lg font-semibold">{selectedIssue.subject}</h3>
             <p className="text-gray-600">{selectedIssue.description}</p>
-            <div className="flex justify-between text-sm text-gray-500">
+            <div className="flex flex-col md:flex-row justify-between text-sm text-gray-500">
               <span>Created by: {selectedIssue.createdBy}</span>
               <span>Created on: {selectedIssue.createdOn}</span>
             </div>
